@@ -1,20 +1,20 @@
+import extractCommandedPlay
 import java.lang.IllegalArgumentException
 
 /*
     Dec 2 - Rock Paper Scissors
  */
 
-fun calculateTotalScore(strategyGuide: String): Int {
-    val plays = strategyGuide.split("\\r?\\n|\\r".toRegex())
-    val x = plays.map { extractPlay(it) }
-    return x.sumOf { it.calculatePoints() }
-}
+fun calculateTotalScorePart1(strategyGuide: String): Int =
+    calculateTotalScore(strategyGuide, ::extractPlay)
 
-fun calculateTotalScorePart2(strategyGuide: String): Int {
-    val plays = strategyGuide.split("\\r?\\n|\\r".toRegex())
-    val x = plays.map { extractCommandedPlay(it) }
-    return x.sumOf { it.calculatePoints() }
-}
+fun calculateTotalScorePart2(strategyGuide: String): Int =
+    calculateTotalScore(strategyGuide, ::extractCommandedPlay)
+
+private fun calculateTotalScore(strategyGuide: String, map: String.() -> RockPaperScissorsPlay): Int =
+    strategyGuide.split("\\r?\\n|\\r".toRegex())
+        .map { map(it) }
+        .sumOf { it.calculatePoints() }
 
 private fun extractPlay(play: String): RockPaperScissorsPlay {
     val (opponentPlay, myPlay) = play.split(" ")

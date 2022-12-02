@@ -42,7 +42,7 @@ class RockPaperScissorsTest : DescribeSpec({
             row(adventCodeInputFile, 10994) // Tried and tested
         ).forEach { (strategyGuide, expectedScore) ->
             it("should return the total score for a strategy guide") {
-                val result = calculateTotalScore(strategyGuide)
+                val result = calculateTotalScorePart1(strategyGuide)
 
                 result shouldBe expectedScore
             }
