@@ -8,20 +8,21 @@ class CalorieCountingTest : DescribeSpec({
         .getResource("caloriecounting_input.txt")
         .readText()
 
-    it("returns the highest calories for one elf") {
-        val input = """
+    describe("Part 1"){
+        it("returns the highest calories for one elf") {
+            val input = """
             1000
             2000
             3000
         """.trimIndent()
 
-        val result = calorieCounting(input)
+            val result = calorieCounting(input)
 
-        result shouldBe 6000
-    }
+            result shouldBe 6000
+        }
 
-    it("returns the highest calories for two elves") {
-        val input = """
+        it("returns the highest calories for two elves") {
+            val input = """
             1000
             2000
             3000
@@ -29,13 +30,13 @@ class CalorieCountingTest : DescribeSpec({
             5000
         """.trimIndent()
 
-        val result = calorieCounting(input)
+            val result = calorieCounting(input)
 
-        result shouldBe 6000
-    }
+            result shouldBe 6000
+        }
 
-    it("returns the highest calories for five elves") {
-        val input = """
+        it("returns the highest calories for five elves") {
+            val input = """
             1000
             2000
             3000
@@ -52,14 +53,21 @@ class CalorieCountingTest : DescribeSpec({
             10000
         """.trimIndent()
 
-        val result = calorieCounting(input)
+            val result = calorieCounting(input)
 
-        result shouldBe 24000
+            result shouldBe 24000
+        }
+
+        it("returns the highest calories for my input") {
+            val result = calorieCounting(adventCodeInputFile)
+
+            result shouldBe 69310 // Tried and tested by the challenge
+        }
     }
 
-    it("returns the highest calories for my input") {
-        val result = calorieCounting(adventCodeInputFile)
+    it("gets the sum of the top three highest calories elves"){
+        val result = topThreeCalories(adventCodeInputFile)
 
-        result shouldBe 69310 // Tried and tested by the challenge
+        result shouldBe 206104 // Tried and tested by the challenge
     }
 })
