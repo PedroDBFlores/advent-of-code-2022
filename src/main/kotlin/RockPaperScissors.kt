@@ -10,9 +10,23 @@ fun calculateTotalScore(strategyGuide: String): Int {
     return x.sumOf { it.calculatePoints() }
 }
 
+fun calculateTotalScorePart2(strategyGuide: String): Int {
+    val plays = strategyGuide.split("\\r?\\n|\\r".toRegex())
+    val x = plays.map { extractCommandedPlay(it) }
+    return x.sumOf { it.calculatePoints() }
+}
+
 private fun extractPlay(play: String): RockPaperScissorsPlay {
     val (opponentPlay, myPlay) = play.split(" ")
-    return RockPaperScissorsPlay(opponentPlay.toShape(), myPlay.toShape())
+    return RockPaperScissorsPlay(opponentPlay.toExpectedShape(), myPlay.toExpectedShape())
+}
+
+private fun extractCommandedPlay(play: String): RockPaperScissorsPlay {
+    val (opponentPlay, myPlay) = play.split(" ")
+    return RockPaperScissorsPlay(
+        opponentPlay.toExpectedShape(),
+        myPlay.toCommandedShape(opponentPlay.toExpectedShape())
+    )
 }
 
 data class RockPaperScissorsPlay(
@@ -31,14 +45,6 @@ data class RockPaperScissorsPlay(
         }
     }
 }
-
-fun String.toShape(): GameShape =
-    when (this) {
-        "A", "X" -> Rock
-        "B", "Y" -> Paper
-        "C", "Z" -> Scissors
-        else -> throw IllegalArgumentException("No shape could be constructed from $this")
-    }
 
 sealed class GameShape(val points: Int) {
     abstract val strongAgainst: GameShape
@@ -59,3 +65,19 @@ object Scissors : GameShape(3) {
     override val strongAgainst: GameShape = Paper
     override val weakAgainst: GameShape = Rock
 }
+
+fun String.toExpectedShape(): GameShape =
+    when (this) {
+        "A", "X" -> Rock
+        "B", "Y" -> Paper
+        "C", "Z" -> Scissors
+        else -> throw IllegalArgumentException("No shape could be constructed from $this")
+    }
+
+fun String.toCommandedShape(other: GameShape): GameShape =
+    when (this) {
+        "X" -> other.strongAgainst
+        "Y" -> other
+        "Z" -> other.weakAgainst
+        else -> throw IllegalArgumentException("No shape could be constructed from $this")
+    }

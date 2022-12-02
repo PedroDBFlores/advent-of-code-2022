@@ -16,34 +16,74 @@ class RockPaperScissorsTest : DescribeSpec({
         .getResource("rockpaperscissors_input.txt")
         .readText()
 
-    listOf(
-        row(
-            """
+    describe("Part 1") {
+        listOf(
+            row(
+                """
             A Y
             B X
             C Z
         """.trimIndent(), 15
-        ),
-        row(
-            """
+            ),
+            row(
+                """
             B Z
             C X
             A Y
         """.trimIndent(), 24
-        ),
-        row(
-            """
+            ),
+            row(
+                """
             B X
             C Y
             A Z
         """.trimIndent(), 6
-        ),
-        row(adventCodeInputFile, 10994) // Tried and tested
-    ).forEach { (strategyGuide, expectedScore) ->
-        it("should return the total score for a strategy guide") {
-            val result = calculateTotalScore(strategyGuide)
+            ),
+            row(adventCodeInputFile, 10994) // Tried and tested
+        ).forEach { (strategyGuide, expectedScore) ->
+            it("should return the total score for a strategy guide") {
+                val result = calculateTotalScore(strategyGuide)
 
-            result shouldBe expectedScore
+                result shouldBe expectedScore
+            }
+        }
+    }
+
+    describe("Part 2") {
+        /*
+        The Elf finishes helping with the tent and sneaks back over to you.
+        "Anyway, the second column says how the round needs to end: X means you need to lose,
+        Y means you need to end the round in a draw, and Z means you need to win. Good luck!"
+         */
+        listOf(
+            row(
+                """
+                A Y
+                B X
+                C Z
+                """.trimIndent(), 12
+            ),
+            row(
+                """
+                A X
+                B X
+                C X
+                """.trimIndent(), 6
+            ),
+            row(
+                """
+                A Z
+                B Z
+                C Z
+                """.trimIndent(), 24
+            ),
+            row(adventCodeInputFile, 12526) // Tried and tested
+        ).forEach { (newStrategyGuide, expectedScore) ->
+            it("should return the total score for the actual strategy guide") {
+                val result = calculateTotalScorePart2(newStrategyGuide)
+
+                result shouldBe expectedScore
+            }
         }
     }
 })
