@@ -10,10 +10,10 @@ The score for a single round is the score for the shape you selected
 the round (0 if you lost, 3 if the round was a draw, and 6 if you won).
 */
 
-class RockPaperScissorsTest : DescribeSpec({
-    val adventCodeInputFile = RockPaperScissorsTest::class
+class Day2Test : DescribeSpec({
+    val adventCodeInputFile = Day2Test::class
         .java
-        .getResource("rockpaperscissors_input.txt")!!
+        .getResource("day2_input.txt")!!
         .readText()
 
     describe("Part 1") {

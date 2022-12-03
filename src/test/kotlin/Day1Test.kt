@@ -1,10 +1,10 @@
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class CalorieCountingTest : DescribeSpec({
-    val adventCodeInputFile = CalorieCountingTest::class
+class Day1Test : DescribeSpec({
+    val adventCodeInputFile = Day1Test::class
         .java
-        .getResource("caloriecounting_input.txt")!!
+        .getResource("day1_input.txt")!!
         .readText()
 
     describe("Part 1"){
