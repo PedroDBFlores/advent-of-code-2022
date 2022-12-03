@@ -13,7 +13,7 @@ the round (0 if you lost, 3 if the round was a draw, and 6 if you won).
 class RockPaperScissorsTest : DescribeSpec({
     val adventCodeInputFile = RockPaperScissorsTest::class
         .java
-        .getResource("rockpaperscissors_input.txt")
+        .getResource("rockpaperscissors_input.txt")!!
         .readText()
 
     describe("Part 1") {

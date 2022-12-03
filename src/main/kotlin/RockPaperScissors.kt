@@ -1,4 +1,3 @@
-import extractCommandedPlay
 import java.lang.IllegalArgumentException
 
 /*
@@ -6,30 +5,27 @@ import java.lang.IllegalArgumentException
  */
 
 fun calculateTotalScorePart1(strategyGuide: String): Int =
-    calculateTotalScore(strategyGuide, ::extractPlay)
+    calculateTotalScore(strategyGuide, ::extractAction)
 
 fun calculateTotalScorePart2(strategyGuide: String): Int =
-    calculateTotalScore(strategyGuide, ::extractCommandedPlay)
+    calculateTotalScore(strategyGuide, ::extractCommandedAction)
 
-private fun calculateTotalScore(strategyGuide: String, map: String.() -> RockPaperScissorsPlay): Int =
+private fun calculateTotalScore(strategyGuide: String, map: String.() -> RockPaperScissorsAction): Int =
     strategyGuide.split("\\r?\\n|\\r".toRegex())
         .map { map(it) }
         .sumOf { it.calculatePoints() }
 
-private fun extractPlay(play: String): RockPaperScissorsPlay {
-    val (opponentPlay, myPlay) = play.split(" ")
-    return RockPaperScissorsPlay(opponentPlay.toExpectedShape(), myPlay.toExpectedShape())
-}
+private fun extractAction(action: String): RockPaperScissorsAction =
+    action.split(" ").let { (opponentAction, myAction) ->
+        RockPaperScissorsAction(opponentAction.toExpectedShape(), myAction.toExpectedShape())
+    }
 
-private fun extractCommandedPlay(play: String): RockPaperScissorsPlay {
-    val (opponentPlay, myPlay) = play.split(" ")
-    return RockPaperScissorsPlay(
-        opponentPlay.toExpectedShape(),
-        myPlay.toCommandedShape(opponentPlay.toExpectedShape())
-    )
-}
+private fun extractCommandedAction(action: String): RockPaperScissorsAction =
+    action.split(" ").let { (opponentAction, myAction) ->
+        RockPaperScissorsAction(opponentAction.toExpectedShape(), myAction.toCommandedShape(opponentAction.toExpectedShape()))
+    }
 
-data class RockPaperScissorsPlay(
+data class RockPaperScissorsAction(
     val opponentGameShape: GameShape,
     val myGameShape: GameShape
 ) {
