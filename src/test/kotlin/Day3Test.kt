@@ -8,23 +8,24 @@ class Day3Test : DescribeSpec({
         .getResource("day3_input.txt")!!
         .readText()
 
-    listOf(
-        row("vJrwpWtwJgWrhcsFMMfFFhFp", 16),
-        row("jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", 38),
-        row("PmmdzqPrVvPwwTWBwg", 42),
-        row("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", 22),
-        row("ttgJtRGJQctTZtZT", 20),
-        row("CrZsJsPPZsGzwwsLwLmpwMDw", 19),
-    ).forEach { (rucksackContents, expectedPriority) ->
-        it("finds the priorities of shared item types in a rucksack for $rucksackContents") {
-            val result = sumPrioritiesSharedItemTypesInRucksack(rucksackContents)
+    describe("Part 1") {
+        listOf(
+            row("vJrwpWtwJgWrhcsFMMfFFhFp", 16),
+            row("jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", 38),
+            row("PmmdzqPrVvPwwTWBwg", 42),
+            row("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", 22),
+            row("ttgJtRGJQctTZtZT", 20),
+            row("CrZsJsPPZsGzwwsLwLmpwMDw", 19),
+        ).forEach { (rucksackContents, expectedPriority) ->
+            it("finds the priorities of shared item types in a rucksack for $rucksackContents") {
+                val result = sumPrioritiesSharedItemTypesInRucksacks(rucksackContents)
 
-            result shouldBe expectedPriority
+                result shouldBe expectedPriority
+            }
         }
-    }
 
-    it("should return the sum of priorities for multiple rucksacks") {
-        val multipleRucksackInputs = """
+        it("should return the sum of priorities for multiple rucksacks") {
+            val multipleRucksackInputs = """
             vJrwpWtwJgWrhcsFMMfFFhFp
             jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
             PmmdzqPrVvPwwTWBwg
@@ -33,14 +34,41 @@ class Day3Test : DescribeSpec({
             CrZsJsPPZsGzwwsLwLmpwMDw
         """.trimIndent()
 
-        val result = sumPrioritiesSharedItemTypesInRucksack(multipleRucksackInputs)
+            val result = sumPrioritiesSharedItemTypesInRucksacks(multipleRucksackInputs)
 
-        result shouldBe 157
+            result shouldBe 157
+        }
+
+        it("should return the sum of priorities for my puzzle") {
+            val result = sumPrioritiesSharedItemTypesInRucksacks(adventCodeInputFile)
+
+            result shouldBe 7826
+        }
     }
 
-    it("should return the sum of priorities for my puzzle") {
-        val result = sumPrioritiesSharedItemTypesInRucksack(adventCodeInputFile)
+    describe("Part 2") {
+        listOf(
+            row(
+                """
+                    vJrwpWtwJgWrhcsFMMfFFhFp
+                    jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+                    PmmdzqPrVvPwwTWBwg
+                """.trimIndent(), 18
+            ),
+            row(
+                """
+                    wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+                    ttgJtRGJQctTZtZT
+                    CrZsJsPPZsGzwwsLwLmpwMDw
+                """.trimIndent(), 52
+            ),
+            row(adventCodeInputFile, 2577)
+        ).forEach { (rucksackContents, expectedPriority) ->
+            it("should return the sum of priorities ($expectedPriority) for an elf group") {
+                val result = sumPrioritiesSharedItemTypesByElfGroups(rucksackContents)
 
-        result shouldBe 7826
+                result shouldBe expectedPriority
+            }
+        }
     }
 })
