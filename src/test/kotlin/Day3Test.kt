@@ -41,6 +41,6 @@ class Day3Test : DescribeSpec({
     it("should return the sum of priorities for my puzzle") {
         val result = sumPrioritiesSharedItemTypesInRucksack(adventCodeInputFile)
 
-        result shouldBe 1
+        result shouldBe 7826
     }
 })
