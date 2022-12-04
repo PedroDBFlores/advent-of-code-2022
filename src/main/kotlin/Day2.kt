@@ -11,7 +11,7 @@ fun calculateTotalScorePart2(strategyGuide: String): Int =
     calculateTotalScore(strategyGuide, ::extractCommandedAction)
 
 private fun calculateTotalScore(strategyGuide: String, map: String.() -> RockPaperScissorsAction): Int =
-    strategyGuide.split("\\r?\\n|\\r".toRegex())
+    strategyGuide.splitMultiline()
         .map { map(it) }
         .sumOf { it.calculatePoints() }
 

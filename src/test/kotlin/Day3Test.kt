@@ -3,10 +3,7 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class Day3Test : DescribeSpec({
-    val adventCodeInputFile = Day3Test::class
-        .java
-        .getResource("day3_input.txt")!!
-        .readText()
+    val adventCodeInputFile = getResourceFile("day3_input.txt")
 
     describe("Part 1") {
         listOf(

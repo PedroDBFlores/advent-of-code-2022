@@ -3,7 +3,7 @@
  */
 
 fun sumPrioritiesSharedItemTypesInRucksacks(input: String): Int =
-    input.split("\\r?\\n|\\r".toRegex())
+    input.splitMultiline()
         .map { line ->
             splitString(line)
                 .let { (firstCompartment, secondCompartment) ->
@@ -13,7 +13,7 @@ fun sumPrioritiesSharedItemTypesInRucksacks(input: String): Int =
         }.sum()
 
 fun sumPrioritiesSharedItemTypesByElfGroups(input: String): Int =
-    input.split("\\r?\\n|\\r".toRegex())
+    input.splitMultiline()
         .chunked(3)
         .map { elvesGroup ->
             return@map elvesGroup.first().fold<MutableSet<Char>>(mutableSetOf()) { acc, item ->

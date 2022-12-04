@@ -11,10 +11,7 @@ the round (0 if you lost, 3 if the round was a draw, and 6 if you won).
 */
 
 class Day2Test : DescribeSpec({
-    val adventCodeInputFile = Day2Test::class
-        .java
-        .getResource("day2_input.txt")!!
-        .readText()
+    val adventCodeInputFile = getResourceFile("day2_input.txt")
 
     describe("Part 1") {
         listOf(

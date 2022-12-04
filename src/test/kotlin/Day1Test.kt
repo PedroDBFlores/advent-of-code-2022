@@ -2,12 +2,9 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class Day1Test : DescribeSpec({
-    val adventCodeInputFile = Day1Test::class
-        .java
-        .getResource("day1_input.txt")!!
-        .readText()
+    val adventCodeInputFile = getResourceFile("day1_input.txt")
 
-    describe("Part 1"){
+    describe("Part 1") {
         it("returns the highest calories for one elf") {
             val input = """
             1000
@@ -64,7 +61,7 @@ class Day1Test : DescribeSpec({
         }
     }
 
-    it("gets the sum of the top three highest calories elves"){
+    it("gets the sum of the top three highest calories elves") {
         val result = topThreeCalories(adventCodeInputFile)
 
         result shouldBe 206104 // Tried and tested by the challenge

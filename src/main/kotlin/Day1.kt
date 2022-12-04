@@ -8,7 +8,7 @@ fun calorieCounting(input: String) =
 fun topThreeCalories(input: String) =
     extractElves(input).sortedDescending().subList(0, 3).sum()
 
-private fun extractElves(input: String) = input.split("\\r?\\n|\\r".toRegex())
+private fun extractElves(input: String) = input.splitMultiline()
     .fold(mutableListOf(0)) { acc, s ->
         if (s.isNotEmpty()) {
             acc[acc.size - 1] += s.toInt()
