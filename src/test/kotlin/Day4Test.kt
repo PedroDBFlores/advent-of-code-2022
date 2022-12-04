@@ -5,33 +5,34 @@ import io.kotest.matchers.shouldBe
 class Day4Test : DescribeSpec({
     val adventCodeInputFile = getResourceFile("day4_input.txt")
 
-    listOf(
-        "2-4,6-8",
-        "2-3,4-5",
-        "5-7,7-9",
-    ).forEach { elvesSections ->
-        it("should not count when both elves have not got overlapping sections ($elvesSections)") {
-            val result = campCleanup(elvesSections)
+    describe("Part 1") {
+        listOf(
+            "2-4,6-8",
+            "2-3,4-5",
+            "5-7,7-9",
+        ).forEach { elvesSections ->
+            it("should not count when both elves have not got fully overlapping sections ($elvesSections)") {
+                val result = countElvesThatFullyOverlap(elvesSections)
 
-            result shouldBe 0
+                result shouldBe 0
+            }
         }
-    }
 
-    listOf(
-        "6-6,4-6",
-        "4-6,3-8",
-        "2-8,3-7",
-    ).forEach { elvesSections ->
-        it("should count when both elves have got overlapping sections ($elvesSections)") {
-            val result = campCleanup(elvesSections)
+        listOf(
+            "6-6,4-6",
+            "4-6,3-8",
+            "2-8,3-7",
+        ).forEach { elvesSections ->
+            it("should count when both elves have got fully overlapping sections ($elvesSections)") {
+                val result = countElvesThatFullyOverlap(elvesSections)
 
-            result shouldBe 1
+                result shouldBe 1
+            }
         }
-    }
 
-    listOf(
-        row(
-            """
+        listOf(
+            row(
+                """
             2-4,6-8
             2-3,4-5
             5-7,7-9
@@ -39,9 +40,9 @@ class Day4Test : DescribeSpec({
             6-6,4-6
             2-6,4-8
         """.trimIndent(), 2
-        ),
-        row(
-            """
+            ),
+            row(
+                """
             2-4,6-8
             2-9,4-5
             5-7,4-9
@@ -49,13 +50,46 @@ class Day4Test : DescribeSpec({
             6-6,4-6
             2-6,4-8
         """.trimIndent(), 4
-        ),
-        row(adventCodeInputFile, 3)
-    ).forEach { (elvesSections, expectedCount) ->
-        it("should count the number of overlapping sections ($expectedCount)") {
-            val result = campCleanup(elvesSections)
+            ),
+            row(adventCodeInputFile, 536)
+        ).forEach { (elvesSections, expectedCount) ->
+            it("should count the number of fully overlapping sections ($expectedCount)") {
+                val result = countElvesThatFullyOverlap(elvesSections)
 
-            result shouldBe expectedCount
+                result shouldBe expectedCount
+            }
+        }
+    }
+
+    describe("Part 2") {
+        listOf(
+            row(
+                """
+            2-4,6-8
+            2-3,4-5
+            5-7,7-9
+            2-8,3-7
+            6-6,4-6
+            2-6,4-8
+        """.trimIndent(), 4
+            ),
+            row(
+                """
+            2-4,6-8
+            2-9,4-5
+            5-7,4-9
+            2-8,3-7
+            6-6,4-6
+            2-6,4-8
+        """.trimIndent(), 5
+            ),
+            row(adventCodeInputFile, 845)
+        ).forEach { (elvesSections, expectedCount) ->
+            it("should count the number of partially overlapping sections ($expectedCount)") {
+                val result = countElvesThatPartiallyOverlap(elvesSections)
+
+                result shouldBe expectedCount
+            }
         }
     }
 })

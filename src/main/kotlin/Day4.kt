@@ -2,20 +2,21 @@
     Dec 3 - Camp Cleanup
  */
 
-fun campCleanup(input: String): Int {
-    val lines = input.splitMultiline()
-    val elvesSections = lines.map {
-        val (firstElfSections, secondElfSections) = it.split(",")
-        Pair(firstElfSections.toRange(), secondElfSections.toRange())
-    }
-    val matchingSections = elvesSections.sumOf {
-        if (it.first.existsIn(it.second) || it.second.existsIn(it.first))
-            return@sumOf 1L
-        return@sumOf 0L
+fun countElvesThatFullyOverlap(input: String): Int = mapSections(input)
+    .sumOf {
+        countIf { it.first.existsIn(it.second) || it.second.existsIn(it.first) }
     }
 
-    return matchingSections.toInt()
-}
+fun countElvesThatPartiallyOverlap(input: String): Int = mapSections(input)
+    .sumOf { countIf { it.first.intersect(it.second).isNotEmpty() } }
+
+private fun countIf(action: () -> Boolean) = if (action()) 1 else 0
+
+private fun mapSections(input: String) = input.splitMultiline()
+    .map { it.split(",") }
+    .map { (firstElfSections, secondElfSections) ->
+        Pair(firstElfSections.toRange(), secondElfSections.toRange())
+    }
 
 private fun String.toRange() = split('-')
     .run { IntRange(this[0].toInt(), this[1].toInt()) }
