@@ -17,15 +17,13 @@ private fun rearrangeCrates(input: String, action: (CrateStacks, List<CrateOpera
     val stacks = initialStacks(crateRepresentation)
     val stacksAfterCommands = action(stacks, commands)
 
-    return stacksAfterCommands.map { it.value }.fold("") { acc, crates ->
-        acc.plus(crates.peek().letter)
-    }
+    return stacksAfterCommands.map { it.value }.joinToString(separator = "") { it.peek().letter.toString() }
 }
 
 private fun extractCrateRepresentationAndCommands(input: String): Pair<List<String>, List<CrateOperation>> =
-    input.splitMultiline().let { it ->
-        Pair(it, it.indexOfFirst { it.isEmpty() || it.isBlank() })
-    }.let { (lines, splitIndex) ->
+    input.splitMultiline()
+        .let { Pair(it, it.indexOfFirst { c-> c.isEmpty() || c.isEmpty() }) }
+        .let { (lines, splitIndex) ->
         val crateRepresentation = lines.subList(0, splitIndex)
         val commands = lines.subList(splitIndex + 1, lines.size).map { it.toCrateOperation() }
         Pair(crateRepresentation, commands)
