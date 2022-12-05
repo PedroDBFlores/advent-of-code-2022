@@ -3,18 +3,19 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class Day5Test : DescribeSpec({
-    listOf(
-        row(
-            """
+    describe("Part 1") {
+        listOf(
+            row(
+                """
                     [R]
                 [Z] [X] [Y]
                  1   2   3
                 
                 move 1 from 2 to 1
             """.trimIndent(), "RXY"
-        ),
-        row(
-            """
+            ),
+            row(
+                """
                         [D]    
                     [N] [C]    
                     [Z] [M] [P]
@@ -25,12 +26,37 @@ class Day5Test : DescribeSpec({
                     move 2 from 2 to 1
                     move 1 from 1 to 2
                 """.trimIndent(), "CMZ"
-        )
-    ).forEach { (cratesArrangement, expectedTopmostCrates) ->
-        it("returns the topmost crate in the stack ($expectedTopmostCrates)") {
-            val result = rearrangeCrates(cratesArrangement)
+            )
+        ).forEach { (cratesArrangement, expectedTopmostCrates) ->
+            it("returns the topmost crate in the stack ($expectedTopmostCrates)") {
+                val result = rearrangeCratesPart1(cratesArrangement)
 
-            result shouldBe expectedTopmostCrates
+                result shouldBe expectedTopmostCrates
+            }
+        }
+    }
+
+    describe("Part 2") {
+        listOf(
+            row(
+                """
+                        [D]    
+                    [N] [C]    
+                    [Z] [M] [P]
+                     1   2   3 
+                    
+                    move 1 from 2 to 1
+                    move 3 from 1 to 3
+                    move 2 from 2 to 1
+                    move 1 from 1 to 2
+                """.trimIndent(), "MCD"
+            )
+        ).forEach { (cratesArrangement, expectedTopmostCrates) ->
+            it("returns the topmost crate in the stack ($expectedTopmostCrates), while moving a block of crates all at once") {
+                val result = rearrangeCratesPart2(cratesArrangement)
+
+                result shouldBe expectedTopmostCrates
+            }
         }
     }
 })

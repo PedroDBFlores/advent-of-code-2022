@@ -32,7 +32,8 @@ val challenges = arrayOf(
     ),
     Challenge(
         day = 5, name = "Supply Stacks", parts = listOf(
-            Part(number = 1, input = supportFiles[5]!!, action = ::rearrangeCrates)
+            Part(number = 1, input = supportFiles[5]!!, action = ::rearrangeCratesPart1),
+            Part(number = 2, input = supportFiles[5]!!, action = ::rearrangeCratesPart2),
         )
     )
 )
