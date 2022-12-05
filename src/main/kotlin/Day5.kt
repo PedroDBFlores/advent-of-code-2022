@@ -3,7 +3,7 @@ import java.util.*
 /*
     Day 5 - Supply Stacks
  */
-typealias CrateStacks = Map<Int, Stack<Crate>>
+private typealias CrateStacks = Map<Int, Stack<Crate>>
 
 fun rearrangeCratesPart1(input: String): String =
     rearrangeCrates(input, ::executeCommands)
@@ -77,9 +77,9 @@ private fun executeCommandsMovingAsAStack(crateStacks: CrateStacks, operations: 
     return crateStacks
 }
 
-data class Crate(val letter: Char)
+private data class Crate(val letter: Char)
 
-data class CrateOperation(
+private data class CrateOperation(
     val numberOfCrates: Int,
     val fromStack: Int,
     val toStack: Int

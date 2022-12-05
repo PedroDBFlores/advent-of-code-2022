@@ -24,7 +24,7 @@ fun sumPrioritiesSharedItemTypesByElfGroups(input: String): Int =
             }.calculatePriorities()
         }.sum()
 
-data class Rucksack(val firstCompartment: String, val secondCompartment: String) {
+private data class Rucksack(val firstCompartment: String, val secondCompartment: String) {
     fun getCommonItems() = firstCompartment.fold(mutableSetOf<Char>()) { acc, c ->
         if (secondCompartment.contains(c)) {
             acc.add(c)

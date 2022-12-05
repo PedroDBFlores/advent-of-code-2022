@@ -25,7 +25,7 @@ private fun extractCommandedAction(action: String): RockPaperScissorsAction =
         RockPaperScissorsAction(opponentAction.toExpectedShape(), myAction.toCommandedShape(opponentAction.toExpectedShape()))
     }
 
-data class RockPaperScissorsAction(
+private data class RockPaperScissorsAction(
     val opponentGameShape: GameShape,
     val myGameShape: GameShape
 ) {
@@ -42,27 +42,27 @@ data class RockPaperScissorsAction(
     }
 }
 
-sealed class GameShape(val points: Int) {
+private sealed class GameShape(val points: Int) {
     abstract val strongAgainst: GameShape
     abstract val weakAgainst: GameShape
 }
 
-object Rock : GameShape(1) {
+private object Rock : GameShape(1) {
     override val strongAgainst: GameShape = Scissors
     override val weakAgainst: GameShape = Paper
 }
 
-object Paper : GameShape(2) {
+private object Paper : GameShape(2) {
     override val strongAgainst: GameShape = Rock
     override val weakAgainst: GameShape = Scissors
 }
 
-object Scissors : GameShape(3) {
+private object Scissors : GameShape(3) {
     override val strongAgainst: GameShape = Paper
     override val weakAgainst: GameShape = Rock
 }
 
-fun String.toExpectedShape(): GameShape =
+private fun String.toExpectedShape(): GameShape =
     when (this) {
         "A", "X" -> Rock
         "B", "Y" -> Paper
@@ -70,7 +70,7 @@ fun String.toExpectedShape(): GameShape =
         else -> throw IllegalArgumentException("No shape could be constructed from $this")
     }
 
-fun String.toCommandedShape(other: GameShape): GameShape =
+private fun String.toCommandedShape(other: GameShape): GameShape =
     when (this) {
         "X" -> other.strongAgainst
         "Y" -> other
