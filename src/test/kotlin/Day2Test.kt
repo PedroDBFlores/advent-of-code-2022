@@ -38,7 +38,7 @@ class Day2Test : DescribeSpec({
             ),
             row(adventCodeInputFile, 10994) // Tried and tested
         ).forEach { (strategyGuide, expectedScore) ->
-            it("should return the total score for a strategy guide") {
+            it("should return the total score ($expectedScore) for a strategy guide") {
                 val result = calculateTotalScorePart1(strategyGuide)
 
                 result shouldBe expectedScore
@@ -76,7 +76,7 @@ class Day2Test : DescribeSpec({
             ),
             row(adventCodeInputFile, 12526) // Tried and tested
         ).forEach { (newStrategyGuide, expectedScore) ->
-            it("should return the total score for the actual strategy guide") {
+            it("should return the total score ($expectedScore) for the actual strategy guide") {
                 val result = calculateTotalScorePart2(newStrategyGuide)
 
                 result shouldBe expectedScore
