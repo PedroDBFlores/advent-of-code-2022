@@ -11,7 +11,7 @@ class Day5Test : DescribeSpec({
                  1   2   3
                 
                 move 1 from 2 to 1
-            """.trimIndent(), "ZRY"
+            """.trimIndent(), "RXY"
         ),
         row(
             """

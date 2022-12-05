@@ -1,7 +1,7 @@
 import domain.Challenge
 import domain.Part
 
-val supportFiles = (1..4).associateWith { day ->
+val supportFiles = (1..5).associateWith { day ->
     getResourceFile("day${day}_input.txt")
 }
 
@@ -28,6 +28,11 @@ val challenges = arrayOf(
         day = 4, name = "Camp Cleanup", parts = listOf(
             Part(number = 1, input = supportFiles[4]!!, action = ::countElvesThatFullyOverlap),
             Part(number = 2, input = supportFiles[4]!!, action = ::countElvesThatPartiallyOverlap),
+        )
+    ),
+    Challenge(
+        day = 5, name = "Supply Stacks", parts = listOf(
+            Part(number = 1, input = supportFiles[5]!!, action = ::rearrangeCrates)
         )
     )
 )
