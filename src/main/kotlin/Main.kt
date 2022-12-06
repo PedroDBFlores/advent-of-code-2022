@@ -44,7 +44,7 @@ val challenges = arrayOf(
     )
 )
 
-fun main(args: Array<String>) {
+fun main() {
     println("Welcome to Advent of Code 2022:")
     println("*".repeat(40))
     challenges.forEach { (day, name, parts) ->
