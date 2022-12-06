@@ -3,7 +3,7 @@ import java.util.*
 /*
     Day 5 - Supply Stacks
  */
-private typealias CrateStacks = Map<Int, Stack<Crate>>
+private typealias CrateStacks = Map<Int, Stack<Char>>
 
 fun rearrangeCratesPart1(input: String): String =
     rearrangeCrates(input, ::executeCommands)
@@ -17,7 +17,7 @@ private fun rearrangeCrates(input: String, action: (CrateStacks, List<CrateOpera
     val stacks = initialStacks(crateRepresentation)
     val stacksAfterCommands = action(stacks, commands)
 
-    return stacksAfterCommands.map { it.value }.joinToString(separator = "") { it.peek().letter.toString() }
+    return stacksAfterCommands.map { it.value }.joinToString(separator = "") { it.peek().toString() }
 }
 
 private fun extractCrateRepresentationAndCommands(input: String): Pair<List<String>, List<CrateOperation>> =
@@ -35,7 +35,7 @@ private fun initialStacks(crateRepresentation: List<String>): CrateStacks {
             return@mapIndexedNotNull i
         return@mapIndexedNotNull null
     }
-    val stacks = List(stackPositions.size) { i -> i + 1 to Stack<Crate>() }.toMap()
+    val stacks = List(stackPositions.size) { i -> i + 1 to Stack<Char>() }.toMap()
 
     crateRepresentation
         .dropLast(1)
@@ -45,7 +45,7 @@ private fun initialStacks(crateRepresentation: List<String>): CrateStacks {
                 line.getOrElse(it) { ' ' }
             }.map { c ->
                 if (!c.isWhitespace()) {
-                    return@map c.toCrate()
+                    return@map c
                 }
                 return@map null
             }
@@ -75,15 +75,12 @@ private fun executeCommandsMovingAsAStack(crateStacks: CrateStacks, operations: 
     return crateStacks
 }
 
-private data class Crate(val letter: Char)
-
 private data class CrateOperation(
     val numberOfCrates: Int,
     val fromStack: Int,
     val toStack: Int
 )
 
-private fun Char.toCrate() = Crate(this)
 
 private fun String.toCrateOperation(): CrateOperation =
     Regex("\\d+")
