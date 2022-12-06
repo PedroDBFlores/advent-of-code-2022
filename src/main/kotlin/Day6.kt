@@ -8,15 +8,10 @@ fun numberOfCharactersProcessedBeforeSOPMarkerPart1(input: String): Int =
 fun numberOfCharactersProcessedBeforeSOPMarkerPart2(input: String): Int =
     numberOfCharactersProcessedBeforeSOPMarker(input, 14)
 
-private fun numberOfCharactersProcessedBeforeSOPMarker(input: String, sizeOfSlice: Int): Int {
+private fun numberOfCharactersProcessedBeforeSOPMarker(input: String, sizeOfSlice: Int): Int =
     (0..input.length)
-        .map { index ->
-            if (input.slice(index until index + sizeOfSlice).allUnique()) {
-                return index + sizeOfSlice
-            }
-        }
-    return -1
-}
+        .firstOrNull { index -> input.slice(index until index + sizeOfSlice).allUnique() }
+        ?.let { it + sizeOfSlice } ?: -1
 
 
 private fun String.allUnique(): Boolean = all(hashSetOf<Char>()::add)
