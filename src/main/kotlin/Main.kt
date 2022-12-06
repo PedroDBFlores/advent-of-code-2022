@@ -1,7 +1,7 @@
 import domain.Challenge
 import domain.Part
 
-val supportFiles = (1..5).associateWith { day ->
+val supportFiles = (1..6).associateWith { day ->
     getResourceFile("day${day}_input.txt")
 }
 
@@ -34,6 +34,12 @@ val challenges = arrayOf(
         day = 5, name = "Supply Stacks", parts = listOf(
             Part(number = 1, input = supportFiles[5]!!, action = ::rearrangeCratesPart1),
             Part(number = 2, input = supportFiles[5]!!, action = ::rearrangeCratesPart2),
+        )
+    ),
+    Challenge(
+        day = 3, name = "Tuning Trouble", parts = listOf(
+            Part(number = 1, input = supportFiles[6]!!, action = ::numberOfCharactersProcessedBeforeSOPMarkerPart1),
+            Part(number = 2, input = supportFiles[6]!!, action = ::numberOfCharactersProcessedBeforeSOPMarkerPart2),
         )
     )
 )
