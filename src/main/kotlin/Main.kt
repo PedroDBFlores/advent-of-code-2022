@@ -37,7 +37,7 @@ val challenges = arrayOf(
         )
     ),
     Challenge(
-        day = 3, name = "Tuning Trouble", parts = listOf(
+        day = 6, name = "Tuning Trouble", parts = listOf(
             Part(number = 1, input = supportFiles[6]!!, action = ::numberOfCharactersProcessedBeforeSOPMarkerPart1),
             Part(number = 2, input = supportFiles[6]!!, action = ::numberOfCharactersProcessedBeforeSOPMarkerPart2),
         )
