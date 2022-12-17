@@ -5,18 +5,50 @@
 const val MAX_SPACE = 70000000
 const val UPDATE_SIZE = 30000000
 
-fun smallDirectoriesSum(input: String): Long {
-    val pwd = Directory("root")
-    pwd.directories["/"] = Directory("/", pwd)
-    val lineTypes = input.splitMultiline()
-        .map { it.toLineType() }
+var x = 1
 
-    buildDirectoryTree(lineTypes, pwd)
+fun smallDirectoriesSum(input: String): Long {
+    val pwd = initializeRootDirectory()
+    val lineTypes = getLineTypes(input)
+
+    prepareDirectoryTree(lineTypes, pwd)
 
     return getSmallestDirectorySum(pwd)
 }
 
-private tailrec fun buildDirectoryTree(lineTypes: List<LineType>, pwd: Directory?) {
+var winner = 70000000L
+
+fun smallestDeletableDir(input: String): Long {
+    val pwd = initializeRootDirectory()
+    val lineTypes = getLineTypes(input)
+
+    prepareDirectoryTree(lineTypes, pwd)
+    val spaceNeeded = UPDATE_SIZE - (MAX_SPACE - pwd.getDirectorySize())
+
+    porra(pwd, spaceNeeded)
+    return winner
+}
+
+private fun getLineTypes(input: String) = input.splitMultiline()
+    .map { it.toLineType() }
+
+private fun initializeRootDirectory(): Directory {
+    val pwd = Directory("root")
+    pwd.directories["/"] = Directory("/", pwd)
+    return pwd
+}
+
+private fun porra(directory: Directory, spaceNeeded: Long) {
+    if (directory.getDirectorySize() in (spaceNeeded + 1) until winner) {
+        winner = directory.getDirectorySize()
+
+    }
+    directory.directories.values.forEach {
+        porra(it, spaceNeeded)
+    }
+}
+
+private tailrec fun prepareDirectoryTree(lineTypes: List<LineType>, pwd: Directory?) {
     if (lineTypes.isEmpty()) return
 
     val line = lineTypes.first()
@@ -25,24 +57,24 @@ private tailrec fun buildDirectoryTree(lineTypes: List<LineType>, pwd: Directory
         is Command -> {
             if (line.name == "cd") {
                 if (line.argument == "..") {
-                    buildDirectoryTree(rest, pwd?.parent)
+                    prepareDirectoryTree(rest, pwd?.parent)
                 } else {
                     val directory = pwd?.directories?.get(line.argument)
-                    buildDirectoryTree(rest, directory)
+                    prepareDirectoryTree(rest, directory)
                 }
             } else if (line.name == "ls") {
-                buildDirectoryTree(rest, pwd)
+                prepareDirectoryTree(rest, pwd)
             }
         }
 
         is DirectoryIndicator -> {
             pwd?.directories?.set(line.name, Directory(line.name, pwd))
-            buildDirectoryTree(rest, pwd)
+            prepareDirectoryTree(rest, pwd)
         }
 
         is File -> {
             pwd?.files?.add(line)
-            buildDirectoryTree(rest, pwd)
+            prepareDirectoryTree(rest, pwd)
         }
     }
 }
@@ -104,14 +136,3 @@ private fun getSmallestDirectorySum(directory: Directory): Long {
     }
     return sum
 }
-
-//private fun smallestDeletableDir(directory: Directory, spaceNeeded: Int, winner)  {
-//    if (directory.getDirectorySize() in (spaceNeeded + 1) until winner) {
-//        winner = getNodeSize(node)
-//
-//    }
-//    node.nodes.values.forEach {
-//        smallestDeletableDir(it)
-//    }
-//
-//}

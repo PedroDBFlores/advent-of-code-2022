@@ -45,6 +45,7 @@ val challenges = arrayOf(
     Challenge(
         day = 7, name = "No Space Left On Device", parts = listOf(
             Part(number = 1, input = supportFiles[7]!!, action = ::smallDirectoriesSum),
+            Part(number = 2, input = supportFiles[7]!!, action = ::smallestDeletableDir),
         )
     )
 )
