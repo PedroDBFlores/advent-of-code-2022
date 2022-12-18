@@ -1,5 +1,7 @@
 import domain.Challenge
 import domain.Part
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 val supportFiles = (1..8).associateWith { day ->
     getResourceFile("day${day}_input.txt")
@@ -55,13 +57,17 @@ val challenges = arrayOf(
     )
 )
 
+@OptIn(ExperimentalTime::class)
 fun main() {
     println("Welcome to Advent of Code 2022:")
     println("*".repeat(40))
     challenges.forEach { (day, name, parts) ->
         println("Challenge for Day $day - $name")
         parts.forEach { part ->
-            println("$part result -> ${part.calculateResult()}")
+            val result = measureTimedValue {
+                part.calculateResult()
+            }
+            println("$part result -> ${result.value}, took ${result.duration.inWholeMilliseconds} ms")
         }
         println("*".repeat(40))
     }

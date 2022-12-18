@@ -29,23 +29,18 @@ data class TreeGrid(val input: String) {
                 val rangeDownY = tree.y - 1 downTo 0
                 val rangeUpY = tree.y + 1 until length
 
-                val visibleLeft = rangeDownX.map { x ->
-                    return@map trees[x][tree.y].value < tree.value
-                }.count { it } == rangeDownX.count()
+                //Any will break earlier
+                val shadowedLeft = rangeDownX.any { x -> trees[x][tree.y].value >= tree.value }
 
-                val visibleRight = rangeUpX.map { x ->
-                    return@map trees[x][tree.y].value < tree.value
-                }.count { it } == rangeUpX.count()
+                val shadowedRight = rangeUpX.any { x -> trees[x][tree.y].value >= tree.value }
 
-                val visibleUp = rangeDownY.map { y ->
-                    return@map trees[tree.x][y].value < tree.value
-                }.count { it } == rangeDownY.count()
+                val shadowedUp = rangeDownY.any { y -> trees[tree.x][y].value >= tree.value }
 
-                val visibleDown = rangeUpY.map { y ->
-                    return@map trees[tree.x][y].value < tree.value
-                }.count { it } == rangeUpY.count()
+                val shadowedDown = rangeUpY.any { y -> trees[tree.x][y].value >= tree.value }
 
-                if (visibleLeft || visibleRight || visibleUp || visibleDown) {
+//                println("$tree, SL: $shadowedLeft, SR: $shadowedRight, SU: $shadowedUp, SD: $shadowedDown")
+
+                if (arrayOf(shadowedLeft, shadowedRight, shadowedUp, shadowedDown).any { !it }) {
                     return@mapNotNull tree
                 }
 
