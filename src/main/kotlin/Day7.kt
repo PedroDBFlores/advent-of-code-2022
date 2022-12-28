@@ -5,8 +5,6 @@
 const val MAX_SPACE = 70000000
 const val UPDATE_SIZE = 30000000
 
-var x = 1
-
 fun smallDirectoriesSum(input: String): Long {
     val pwd = initializeRootDirectory()
     val lineTypes = getLineTypes(input)

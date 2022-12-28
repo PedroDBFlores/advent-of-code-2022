@@ -3,7 +3,7 @@ import domain.Part
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
-val supportFiles = (1..8).associateWith { day ->
+val supportFiles = (1..9).associateWith { day ->
     getResourceFile("day${day}_input.txt")
 }
 
@@ -54,6 +54,11 @@ val challenges = arrayOf(
         day = 8, name = "Treetop Tree House", parts = listOf(
             Part(number = 1, input = supportFiles[8]!!, action = ::visibleTrees),
             Part(number = 2, input = supportFiles[8]!!, action = ::scenicScore),
+        )
+    ),
+    Challenge(
+        day = 9, name = "Rope Bridge", parts = listOf(
+            Part(number = 1, input = supportFiles[9]!!, action = ::tailVisit),
         )
     )
 )

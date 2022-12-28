@@ -92,7 +92,3 @@ data class TreeGrid(val input: String) {
             }
         }
 }
-
-private enum class Direction {
-    Up, Down, Left, Right
-}
