@@ -1,8 +1,8 @@
 import kotlin.math.abs
 import kotlin.math.sign
 
-fun tailVisit(input: String): Int {
-    val rope = Rope()
+fun tailVisit(input: String, ropeSize: Int = 2): Int {
+    val rope = Rope(ropeSize)
     input.splitMultiline()
         .map { it.split(" ") }
         .map { it.toRopeCommand() }
@@ -31,30 +31,30 @@ private fun List<String>.toRopeCommand() = RopeCommand(
 
 private data class Coordinates(val x: Int = 0, val y: Int = 0)
 
-private class Rope {
-    private var headCoordinates = Coordinates()
-    private var tailCoordinates = Coordinates()
-        set(value) {
-            field = value
-            tailVisits.add(value)
-        }
-    private val tailVisits: MutableSet<Coordinates> = mutableSetOf(tailCoordinates)
+private class Rope(private val size: Int) {
+    private val nodes = (1..size).map { Coordinates() }.toMutableList()
+    private val tailVisits: MutableSet<Coordinates> = mutableSetOf(Coordinates(0, 0))
 
     fun move(command: RopeCommand): Unit = with(command) {
         (steps downTo 1).forEach { _ ->
-            headCoordinates = when (direction) {
-                Direction.Up -> headCoordinates.copy(y = headCoordinates.y + 1)
-                Direction.Down -> headCoordinates.copy(y = headCoordinates.y - 1)
-                Direction.Left -> headCoordinates.copy(x = headCoordinates.x - 1)
-                Direction.Right -> headCoordinates.copy(x = headCoordinates.x + 1)
+            nodes[0] = when (direction) {
+                Direction.Up -> nodes[0].copy(y = nodes[0].y + 1)
+                Direction.Down -> nodes[0].copy(y = nodes[0].y - 1)
+                Direction.Left -> nodes[0].copy(x = nodes[0].x - 1)
+                Direction.Right -> nodes[0].copy(x = nodes[0].x + 1)
             }
-            val offsetX = headCoordinates.x - tailCoordinates.x
-            val offsetY = headCoordinates.y - tailCoordinates.y
-            if (abs(offsetX) > 1 || abs(offsetY) > 1) {
-                tailCoordinates = tailCoordinates.copy(
-                    x = tailCoordinates.x + offsetX.sign,
-                    y = tailCoordinates.y + offsetY.sign
-                )
+            (0 until size - 1).forEach { pos ->
+                val offsetX = nodes[pos].x - nodes[pos + 1].x
+                val offsetY = nodes[pos].y - nodes[pos + 1].y
+                if (abs(offsetX) > 1 || abs(offsetY) > 1) {
+                    nodes[pos + 1] = nodes[pos + 1].copy(
+                        x = nodes[pos + 1].x + offsetX.sign,
+                        y = nodes[pos + 1].y + offsetY.sign
+                    )
+                    if (nodes.lastIndex == pos + 1) {
+                        tailVisits.add(nodes[nodes.lastIndex])
+                    }
+                }
             }
         }
     }

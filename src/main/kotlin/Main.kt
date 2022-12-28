@@ -59,6 +59,7 @@ val challenges = arrayOf(
     Challenge(
         day = 9, name = "Rope Bridge", parts = listOf(
             Part(number = 1, input = supportFiles[9]!!, action = ::tailVisit),
+            Part(number = 2, input = supportFiles[9]!!, action = { tailVisit(it, 10) }),
         )
     )
 )
