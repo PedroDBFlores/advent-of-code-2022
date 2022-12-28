@@ -53,6 +53,7 @@ val challenges = arrayOf(
     Challenge(
         day = 8, name = "Treetop Tree House", parts = listOf(
             Part(number = 1, input = supportFiles[8]!!, action = ::visibleTrees),
+            Part(number = 2, input = supportFiles[8]!!, action = ::scenicScore),
         )
     )
 )
