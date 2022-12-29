@@ -1,30 +1,29 @@
 import java.lang.IllegalArgumentException
-import java.util.LinkedList
 
-fun sumSignalStrengths(input: String, cyclesToObserve: List<Int>): Int {
-    val commands = input
-        .splitMultiline()
-        .map { it.split(" ") }
-        .map { it.toOp() }
-    val commandQueue = LinkedList(commands)
+fun sumSignalStrengths(input: String, cyclesToObserve: List<Int>): Int = input
+    .splitMultiline()
+    .map { it.split(" ") }
+    .map { it.toOp() }
+    .run(::computeCommands)
+    .filter { p -> cyclesToObserve.contains(p.first) }
+    .sumOf { p -> p.first * p.second }
 
-    var sum = 0
+private fun computeCommands(commands: List<Op>): List<Pair<Int, Int>> {
     var cycle = 0
+    var register = 1
     var nextCommandCycle: Int
-    var registerX = 1
-    commandQueue.iterator().forEach { command ->
+    return commands.flatMap { command ->
+        val states = mutableListOf<Pair<Int, Int>>()
         nextCommandCycle = cycle + command.cycles
         while (nextCommandCycle != cycle) {
             cycle++
-            if (cyclesToObserve.contains(cycle)) {
-                sum += cycle * registerX
-            }
+            states.add(cycle to register)
         }
         if (command is Addx) {
-            registerX += command.value
+            register += command.value
         }
+        states
     }
-    return sum
 }
 
 private sealed class Op(val cycles: Int)
