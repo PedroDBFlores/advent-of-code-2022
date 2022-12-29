@@ -3,7 +3,7 @@ import domain.Part
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
-val supportFiles = (1..9).associateWith { day ->
+val supportFiles = (1..10).associateWith { day ->
     getResourceFile("day${day}_input.txt")
 }
 
@@ -60,6 +60,14 @@ val challenges = arrayOf(
         day = 9, name = "Rope Bridge", parts = listOf(
             Part(number = 1, input = supportFiles[9]!!, action = ::tailVisit),
             Part(number = 2, input = supportFiles[9]!!, action = { tailVisit(it, 10) }),
+        )
+    ),
+    Challenge(
+        day = 10, name = "Cathode-Ray Tube", parts = listOf(
+            Part(
+                number = 1,
+                input = supportFiles[10]!!,
+                action = { sumSignalStrengths(it, listOf(20, 60, 100, 140, 180, 220)) }),
         )
     )
 )
