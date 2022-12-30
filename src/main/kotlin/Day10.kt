@@ -4,9 +4,32 @@ fun sumSignalStrengths(input: String, cyclesToObserve: List<Int>): Int = input
     .splitMultiline()
     .map { it.split(" ") }
     .map { it.toOp() }
-    .run(::computeCommands)
+    .let(::computeCommands)
     .filter { p -> cyclesToObserve.contains(p.first) }
     .sumOf { p -> p.first * p.second }
+
+fun crtOutput(input: String): String = input
+    .splitMultiline()
+    .map { it.split(" ") }
+    .map { it.toOp() }
+    .let(::computeCommands)
+    .chunked(40)
+    .map { row ->
+        row.mapIndexed { index, (_, register) ->
+            val spriteRange = register - 1..register + 1
+            if (spriteRange.contains(index + 1)) return@mapIndexed "#"
+            return@mapIndexed "."
+        }.joinToString("")
+    }.joinToString("\r\n")
+
+
+//    .joinToString("") { (cycle, register) ->
+//        val spriteRange = register - 1..register + 1
+//        if (spriteRange.contains(cycle)) return@joinToString "#"
+//        return@joinToString "."
+//    }
+//    .chunked(40)
+//    .joinToString("\r\n")
 
 private fun computeCommands(commands: List<Op>): List<Pair<Int, Int>> {
     var cycle = 0
